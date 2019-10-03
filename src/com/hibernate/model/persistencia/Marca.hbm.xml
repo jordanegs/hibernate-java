@@ -1,0 +1,11 @@
+<hibernate-mapping>
+    <class name="com.hibernate.model.persistencia.Producto" table="producto" catalog="hibernate_mvc" optimistic-lock="version">
+        <id name="id_producto" type="java.lang.Integer">
+            <column name="id_producto" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="100" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
