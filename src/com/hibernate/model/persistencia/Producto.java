@@ -2,10 +2,10 @@ package com.hibernate.model.persistencia;
 
 public class Producto implements java.io.Serializable {
     private int id_producto;
-    private int id_marca;
-    private int id_presentacion;
-    private int id_proveedor;
-    private int id_zona;
+    private Marca marca;
+    private Presentacion presentacion;
+    private Proveedor proveedor;
+    private Zona zona;
     private int codigo;
     private String descripcion_producto;
     private double precio;
@@ -16,12 +16,12 @@ public class Producto implements java.io.Serializable {
     public Producto() {
     }
 
-    public Producto(int id_producto, int id_marca, int id_presentacion, int id_proveedor, int id_zona, int codigo, String descripcion_producto, double precio, int stock, int iva, double peso) {
+    public Producto(int id_producto, Marca marca, Presentacion presentacion, Proveedor proveedor, Zona zona, int codigo, String descripcion_producto, double precio, int stock, int iva, double peso) {
         this.id_producto = id_producto;
-        this.id_marca = id_marca;
-        this.id_presentacion = id_presentacion;
-        this.id_proveedor = id_proveedor;
-        this.id_zona = id_zona;
+        this.marca = marca;
+        this.presentacion = presentacion;
+        this.proveedor = proveedor;
+        this.zona = zona;
         this.codigo = codigo;
         this.descripcion_producto = descripcion_producto;
         this.precio = precio;
@@ -38,36 +38,36 @@ public class Producto implements java.io.Serializable {
         this.id_producto = id_producto;
     }
 
-    public int getId_marca() {
-        return id_marca;
+    public Marca getMarca() {
+        return marca;
     }
 
-    public void setId_marca(int id_marca) {
-        this.id_marca = id_marca;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
-    public int getId_presentacion() {
-        return id_presentacion;
+    public Presentacion getPresentacion() {
+        return presentacion;
     }
 
-    public void setId_presentacion(int id_presentacion) {
-        this.id_presentacion = id_presentacion;
+    public void setPresentacion(Presentacion presentacion) {
+        this.presentacion = presentacion;
     }
 
-    public int getId_proveedor() {
-        return id_proveedor;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setId_proveedor(int id_proveedor) {
-        this.id_proveedor = id_proveedor;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
-    public int getId_zona() {
-        return id_zona;
+    public Zona getZona() {
+        return zona;
     }
 
-    public void setId_zona(int id_zona) {
-        this.id_zona = id_zona;
+    public void setZona(Zona zona) {
+        this.zona = zona;
     }
 
     public int getCodigo() {

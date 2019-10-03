@@ -1,11 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.hibernate.model.persistencia.Presentacion" table="presentacion" catalog="hibernate_mvc" optimistic-lock="version">
-        <id name="id_presentacion" type="java.lang.Integer">
-            <column name="id_presentacion" />
+    <class name="com.hibernate.model.persistencia.Producto" table="producto" catalog="hibernate_mvc" optimistic-lock="version">
+        <id name="id_producto" type="java.lang.Integer">
+            <column name="id_producto" />
             <generator class="identity" />
         </id>
-        <property name="descripcion" type="string">
-            <column name="descripcion" length="50" not-null="true" />
+        <one-to-one name="marca" class="com.hibernate.model.persistencia.Marca" />
+        <one-to-one name="presentacion" class="com.hibernate.model.persistencia.Presentacion" />
+        <one-to-one name="proveedor" class="com.hibernate.model.persistencia.Proveedor" />
+        <one-to-one name="zona" class="com.hibernate.model.persistencia.Zona" />
+        <property name="codigo" type="int">
+            <column name="codigo" not-null="true" />
+        </property>
+        <property name="descripcion_producto" type="string">
+            <column name="descripcion_producto" not-null="true" />
+        </property>
+        <property name="precio" type="double">
+            <column name="precio" not-null="true" />
+        </property>
+        <property name="stock" type="int">
+            <column name="stock" not-null="true" />
+        </property>
+        <property name="iva" type="int">
+            <column name="iva" not-null="true" />
+        </property>
+        <property name="peso" type="double">
+            <column name="peso" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

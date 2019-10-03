@@ -43,9 +43,13 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/demomvc?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate_mvc?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password"></property>
-    <mapping resource="com/demo/model/persistencia/Usuario.hbm.xml"/>
+    <mapping resource="com/hibernate/model/persistencia/Marca.hbm.xml"/>
+    <mapping resource="com/hibernate/model/persistencia/Presentacion.hbm.xml"/>
+    <mapping resource="com/hibernate/model/persistencia/Producto.hbm.xml"/>
+    <mapping resource="com/hibernate/model/persistencia/Proveedor.hbm.xml"/>
+    <mapping resource="com/hibernate/model/persistencia/Zona.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

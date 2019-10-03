@@ -1,7 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.hibernate.model.persistencia.Presentacion" table="presentacion" catalog="hibernate_mvc" optimistic-lock="version">
-        <id name="id_presentacion" type="java.lang.Integer">
-            <column name="id_presentacion" />
+    <class name="com.hibernate.model.persistencia.Proveedor" table="proveedor" catalog="hibernate_mvc" optimistic-lock="version">
+        <id name="id_proveedor" type="java.lang.Integer">
+            <column name="id_proveedor" />
             <generator class="identity" />
         </id>
         <property name="descripcion" type="string">
