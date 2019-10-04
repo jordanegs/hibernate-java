@@ -1,21 +1,21 @@
 package com.hibernate.model;
 
-import com.hibernate.model.persistencia.Producto;
+import com.hibernate.model.persistencia.Presentacion;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class ModelProducto {
-    static public Producto verProducto(int id){
+public class ModelPresentacion {
+    static public Presentacion verPresentacion(int id){
         Session session = null;
         try{
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session =sessionFactory.openSession();
             session.beginTransaction();
-            Producto producto = (Producto) session.get(Producto.class, id);
+            Presentacion presentacion = (Presentacion) session.get(Presentacion.class, id);
             session.getTransaction().commit();
             
-            return producto;
+            return presentacion;
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -27,15 +27,15 @@ public class ModelProducto {
         return null;
     }
     
-    static public void crearProducto(Producto producto){
+    static public void crearPresentacion(Presentacion presentacion){
         Session session = null;
         try{
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session =sessionFactory.openSession();
             session.beginTransaction();
-            session.save(producto);
+            session.save(presentacion);
             session.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Registro de Producto Correcto");
+            JOptionPane.showMessageDialog(null, "Registro de Presentacion Correcto");
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -46,16 +46,37 @@ public class ModelProducto {
         }
     }
     
-    static public void eliminarProducto(int id){
+    static public void actualizarPresentacion(int id, String descripcion){
         Session session = null;
         try{
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session =sessionFactory.openSession();
             session.beginTransaction();
-            Producto producto = (Producto) session.get(Producto.class, id);
-            session.delete(producto);
+            Presentacion presentacion = (Presentacion) session.get(Presentacion.class, id);
+            presentacion.setDescripcion(descripcion);
+            session.saveOrUpdate(presentacion);
             session.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Eliminación de Producto Correcto");
+            JOptionPane.showMessageDialog(null, "Actualización de Presentacion Correcto");
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        finally{
+          session.flush();
+          session.close();
+        }
+    }
+    
+    static public void eliminarPresentacion(int id){
+        Session session = null;
+        try{
+            SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+            session =sessionFactory.openSession();
+            session.beginTransaction();
+            Presentacion presentacion = (Presentacion) session.get(Presentacion.class, id);
+            session.delete(presentacion);
+            session.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Eliminación de Presentacion Correcto");
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
