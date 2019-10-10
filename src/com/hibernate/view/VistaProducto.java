@@ -1,10 +1,10 @@
 package com.hibernate.view;
 
-import com.hibernate.model.ModelMarca;
-import com.hibernate.model.ModelPresentacion;
-import com.hibernate.model.ModelProducto;
-import com.hibernate.model.ModelProveedor;
-import com.hibernate.model.ModelZona;
+import com.hibernate.controller.ControllerMarca;
+import com.hibernate.controller.ControllerPresentacion;
+import com.hibernate.controller.ControllerProducto;
+import com.hibernate.controller.ControllerProveedor;
+import com.hibernate.controller.ControllerZona;
 import com.hibernate.model.persistencia.Marca;
 import com.hibernate.model.persistencia.Presentacion;
 import com.hibernate.model.persistencia.Producto;
@@ -17,11 +17,21 @@ import javax.swing.table.DefaultTableModel;
 public final class VistaProducto extends javax.swing.JFrame {
     DefaultTableModel model;
     boolean actualizar = false;
+    ControllerProducto controllerProducto;
+    ControllerMarca controllerMarca;
+    ControllerPresentacion controllerPresentacion;
+    ControllerProveedor controllerProveedor;
+    ControllerZona controllerZona;
     
     public VistaProducto() {
         initComponents();
         setLocationRelativeTo(null);
         this.model = new DefaultTableModel();
+        this.controllerProducto = new ControllerProducto();
+        this.controllerMarca = new ControllerMarca();
+        this.controllerPresentacion = new ControllerPresentacion();
+        this.controllerProveedor = new ControllerProveedor();
+        this.controllerZona = new ControllerZona();
         this.tablaProductos();
         this.llenarTabla();
         this.llenarMarca();
@@ -53,7 +63,7 @@ public final class VistaProducto extends javax.swing.JFrame {
     
     public void llenarTabla(){
         model.setRowCount(0);
-        List<Producto> productos = ModelProducto.verProductos();
+        List<Producto> productos = this.controllerProducto.verProductos();
         productos.forEach((producto) -> {
             model.addRow(new Object[]{
                 producto.getId_producto(),
@@ -74,28 +84,28 @@ public final class VistaProducto extends javax.swing.JFrame {
     }
     
     public void llenarMarca(){
-        List<Marca> marcas = ModelMarca.verMarcas();
+        List<Marca> marcas = this.controllerMarca.verMarcas();
         marcas.forEach((marca)-> {
             jComboMarca.addItem(marca.getDescripcion());
         });
     }
     
     public void llenarPresentacion(){
-        List<Presentacion> presentaciones = ModelPresentacion.verPresentaciones();
+        List<Presentacion> presentaciones = this.controllerPresentacion.verPresentaciones();
         presentaciones.forEach((presentacion)-> {
             jComboPresentacion.addItem(presentacion.getDescripcion());
         });
     }
     
     public void llenarProveedor(){
-        List<Proveedor> proveedores = ModelProveedor.verProveedores();
+        List<Proveedor> proveedores = this.controllerProveedor.verProveedores();
         proveedores.forEach((proveedor)-> {
             jComboProveedor.addItem(proveedor.getDescripcion());
         });
     }
     
     public void llenarZona(){
-        List<Zona> zonas = ModelZona.verZonas();
+        List<Zona> zonas = this.controllerZona.verZonas();
         zonas.forEach((zona)-> {
             jComboZona.addItem(zona.getDescripcion());
         });
@@ -147,6 +157,12 @@ public final class VistaProducto extends javax.swing.JFrame {
         btnActualizarP = new javax.swing.JButton();
         btnEliminarP = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -223,6 +239,44 @@ public final class VistaProducto extends javax.swing.JFrame {
 
         txtId.setEnabled(false);
 
+        jMenu1.setText("Crear");
+
+        jMenuItem1.setText("Crear Marca");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Crear Presentación");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Crear Proveedor");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Crear Zona");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -273,7 +327,6 @@ public final class VistaProducto extends javax.swing.JFrame {
                                                         .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addGroup(layout.createSequentialGroup()
-                                                    .addGap(33, 33, 33)
                                                     .addComponent(jLabel11)
                                                     .addGap(18, 18, 18)
                                                     .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,7 +364,7 @@ public final class VistaProducto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,7 +412,7 @@ public final class VistaProducto extends javax.swing.JFrame {
                             .addComponent(jLabel11)
                             .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCrear)
                     .addComponent(btnActualizar))
                 .addGap(29, 29, 29))
@@ -372,10 +425,10 @@ public final class VistaProducto extends javax.swing.JFrame {
         if(this.txtCodigo.getText().equals("") || this.txtDescripcion.getText().equals("") ||  this.txtPrecio.getText().equals("") || this.txtStock.getText().equals("") || this.txtIVA.getText().equals("") || this.txtPeso.getText().equals("") ){
             JOptionPane.showMessageDialog(null, "Llenar todos los campos");
         } else {
-            Marca marca = ModelMarca.verMarca(jComboMarca.getSelectedItem().toString());
-            Presentacion presentacion = ModelPresentacion.verPresentacion(jComboPresentacion.getSelectedItem().toString());
-            Proveedor proveedor = ModelProveedor.verProveedor(jComboProveedor.getSelectedItem().toString());
-            Zona zona = ModelZona.verZona(jComboZona.getSelectedItem().toString());
+            Marca marca = this.controllerMarca.verMarca(jComboMarca.getSelectedItem().toString());
+            Presentacion presentacion = this.controllerPresentacion.verPresentacion(jComboPresentacion.getSelectedItem().toString());
+            Proveedor proveedor = this.controllerProveedor.verProveedor(jComboProveedor.getSelectedItem().toString());
+            Zona zona = this.controllerZona.verZona(jComboZona.getSelectedItem().toString());
         
             Producto producto = new Producto();
             producto.setMarca(marca);
@@ -389,7 +442,7 @@ public final class VistaProducto extends javax.swing.JFrame {
             producto.setIva(Integer.parseInt(this.txtIVA.getText()));
             producto.setPeso(Double.parseDouble(this.txtPeso.getText()));
 
-            ModelProducto.crearProducto(producto);
+            this.controllerProducto.crearProducto(producto);
             this.llenarTabla();
             this.limpiar();
         }
@@ -407,7 +460,7 @@ public final class VistaProducto extends javax.swing.JFrame {
             try {
                 int rowS = tableProductos.getSelectedRow();
                 int cod = (int) tableProductos.getValueAt(rowS, 0);
-                ModelProducto.eliminarProducto(cod);
+                this.controllerProducto.eliminarProducto(cod);
                 this.model.removeRow(rowS);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Seleccione Fila");
@@ -440,10 +493,10 @@ public final class VistaProducto extends javax.swing.JFrame {
         if(this.txtCodigo.getText().equals("") || this.txtDescripcion.getText().equals("") ||  this.txtPrecio.getText().equals("") || this.txtStock.getText().equals("") || this.txtIVA.getText().equals("") || this.txtPeso.getText().equals("") ){
             JOptionPane.showMessageDialog(null, "Llenar todos los campos");
         } else {
-            Marca marca = ModelMarca.verMarca(jComboMarca.getSelectedItem().toString());
-            Presentacion presentacion = ModelPresentacion.verPresentacion(jComboPresentacion.getSelectedItem().toString());
-            Proveedor proveedor = ModelProveedor.verProveedor(jComboProveedor.getSelectedItem().toString());
-            Zona zona = ModelZona.verZona(jComboZona.getSelectedItem().toString());
+            Marca marca = this.controllerMarca.verMarca(jComboMarca.getSelectedItem().toString());
+            Presentacion presentacion = this.controllerPresentacion.verPresentacion(jComboPresentacion.getSelectedItem().toString());
+            Proveedor proveedor = this.controllerProveedor.verProveedor(jComboProveedor.getSelectedItem().toString());
+            Zona zona = this.controllerZona.verZona(jComboZona.getSelectedItem().toString());
         
             Producto producto = new Producto();
             producto.setId_producto(Integer.parseInt(this.txtId.getText()));
@@ -458,7 +511,7 @@ public final class VistaProducto extends javax.swing.JFrame {
             producto.setIva(Integer.parseInt(this.txtIVA.getText()));
             producto.setPeso(Double.parseDouble(this.txtPeso.getText()));
 
-            ModelProducto.actualizarProducto(producto);
+            this.controllerProducto.actualizarProducto(producto);
             this.llenarTabla();
             this.limpiar();
             
@@ -466,6 +519,26 @@ public final class VistaProducto extends javax.swing.JFrame {
             this.ocultar();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        vistaMarca vistaM = new vistaMarca();
+        vistaM.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        vistaPresentacion vistaP = new vistaPresentacion();
+        vistaP.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        vistaProveedor vistaPv = new vistaProveedor();
+        vistaPv.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        vistaZona vistaZ = new vistaZona();
+        vistaZ.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -520,6 +593,12 @@ public final class VistaProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableProductos;
     private javax.swing.JTextField txtCodigo;
