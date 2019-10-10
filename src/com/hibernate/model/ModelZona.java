@@ -1,11 +1,33 @@
 package com.hibernate.model;
 
 import com.hibernate.model.persistencia.Zona;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class ModelZona {
+    static public List<Zona> verZonas(){
+        Session session = null;
+        try{
+            SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+            session =sessionFactory.openSession();
+            session.beginTransaction();
+            List<Zona> zonas = session.createQuery("FROM Zona").list();
+            session.getTransaction().commit();
+            
+            return zonas;
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        finally{
+          session.flush();
+          session.close();
+        }
+        return null;
+    }
+    
     static public Zona verZona(int id){
         Session session = null;
         try{

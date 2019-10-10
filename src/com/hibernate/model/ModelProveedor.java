@@ -1,11 +1,33 @@
 package com.hibernate.model;
 
 import com.hibernate.model.persistencia.Proveedor;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class ModelProveedor {
+    static public List<Proveedor> verProveedores(){
+        Session session = null;
+        try{
+            SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+            session =sessionFactory.openSession();
+            session.beginTransaction();
+            List<Proveedor> proveedores = session.createQuery("FROM Proveedor").list();
+            session.getTransaction().commit();
+            
+            return proveedores;
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        finally{
+          session.flush();
+          session.close();
+        }
+        return null;
+    }
+    
     static public Proveedor verProveedor(int id){
         Session session = null;
         try{

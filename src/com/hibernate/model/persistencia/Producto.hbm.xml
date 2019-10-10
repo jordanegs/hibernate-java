@@ -7,10 +7,10 @@
             <column name="id_producto" />
             <generator class="identity" />
         </id>
-        <one-to-one name="marca" class="com.hibernate.model.persistencia.Marca" />
-        <one-to-one name="presentacion" class="com.hibernate.model.persistencia.Presentacion" />
-        <one-to-one name="proveedor" class="com.hibernate.model.persistencia.Proveedor" />
-        <one-to-one name="zona" class="com.hibernate.model.persistencia.Zona" />
+        <many-to-one name="marca" class="com.hibernate.model.persistencia.Marca" column="id_marca" />
+        <many-to-one name="presentacion" class="com.hibernate.model.persistencia.Presentacion" column="id_presentacion" />
+        <many-to-one name="proveedor" class="com.hibernate.model.persistencia.Proveedor" column="id_proveedor" />
+        <many-to-one name="zona" class="com.hibernate.model.persistencia.Zona" column="id_zona" />
         <property name="codigo" type="int">
             <column name="codigo" not-null="true" />
         </property>

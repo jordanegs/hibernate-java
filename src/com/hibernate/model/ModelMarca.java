@@ -1,11 +1,33 @@
 package com.hibernate.model;
 
 import com.hibernate.model.persistencia.Marca;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class ModelMarca {
+    static public List<Marca> verMarcas(){
+        Session session = null;
+        try{
+            SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+            session =sessionFactory.openSession();
+            session.beginTransaction();
+            List<Marca> marcas = session.createQuery("FROM Marca").list();
+            session.getTransaction().commit();
+            
+            return marcas;
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        finally{
+          session.flush();
+          session.close();
+        }
+        return null;
+    }
+    
     static public Marca verMarca(int id){
         Session session = null;
         try{
