@@ -3,6 +3,7 @@ package com.hibernate.model;
 import com.hibernate.model.persistencia.Marca;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -28,13 +29,16 @@ public class ModelMarca {
         return null;
     }
     
-    static public Marca verMarca(int id){
+    static public Marca verMarca(String descripcion){
         Session session = null;
         try{
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session =sessionFactory.openSession();
             session.beginTransaction();
-            Marca marca = (Marca) session.get(Marca.class, id);
+            Query query = session.createQuery("FROM Marca where descripcion = :descripcion");
+            query.setParameter("descripcion", descripcion);
+            List<?> list = query.list();
+            Marca marca = (Marca)list.get(0);
             session.getTransaction().commit();
             
             return marca;

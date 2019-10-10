@@ -39,10 +39,13 @@ public class main {
         //marca.setDescripcion("Marca 3");
         //ModelMarca.crearMarca(marca);
         
-        List<Producto> productos = ModelProducto.verProductos();
-        productos.forEach((producto) -> {
-            System.out.println(producto.getDescripcion_producto());
-            System.out.println(producto.getMarca().getDescripcion());
-        });
+        Marca marca = ModelMarca.verMarca("Marca 1");
+        System.out.println(marca.getDescripcion());
+        
+//        List<Producto> productos = ModelProducto.verProductos();
+//        productos.forEach((producto) -> {
+//            System.out.println(producto.getDescripcion_producto());
+//            System.out.println(producto.getMarca().getDescripcion());
+//        });
     }
 }

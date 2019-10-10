@@ -3,6 +3,7 @@ package com.hibernate.model;
 import com.hibernate.model.persistencia.Presentacion;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -28,13 +29,16 @@ public class ModelPresentacion {
         return null;
     }
     
-    static public Presentacion verPresentacion(int id){
+    static public Presentacion verPresentacion(String descripcion){
         Session session = null;
         try{
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session =sessionFactory.openSession();
             session.beginTransaction();
-            Presentacion presentacion = (Presentacion) session.get(Presentacion.class, id);
+            Query query = session.createQuery("FROM Presentacion where descripcion = :descripcion");
+            query.setParameter("descripcion", descripcion);
+            List<?> list = query.list();
+            Presentacion presentacion = (Presentacion)list.get(0);
             session.getTransaction().commit();
             
             return presentacion;

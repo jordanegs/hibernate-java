@@ -63,15 +63,13 @@ public class ModelProducto {
         }
     }
 
-    static public void actualizarProducto(int id, String descripcion) {
+    static public void actualizarProducto(Producto producto) {
         Session session = null;
         try {
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session = sessionFactory.openSession();
             session.beginTransaction();
-            Producto producto = (Producto) session.get(Producto.class, id);
-            //producto.setDescripcion(descripcion);
-            //session.saveOrUpdate(producto);
+            session.saveOrUpdate(producto);
             session.getTransaction().commit();
             JOptionPane.showMessageDialog(null, "Actualización de Producto Correcto");
         } catch (Exception e) {

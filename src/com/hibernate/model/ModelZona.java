@@ -3,6 +3,7 @@ package com.hibernate.model;
 import com.hibernate.model.persistencia.Zona;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -28,13 +29,16 @@ public class ModelZona {
         return null;
     }
     
-    static public Zona verZona(int id){
+    static public Zona verZona(String descripcion){
         Session session = null;
         try{
             SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
             session =sessionFactory.openSession();
             session.beginTransaction();
-            Zona zona = (Zona) session.get(Zona.class, id);
+            Query query = session.createQuery("FROM Zona where descripcion = :descripcion");
+            query.setParameter("descripcion", descripcion);
+            List<?> list = query.list();
+            Zona zona = (Zona)list.get(0);
             session.getTransaction().commit();
             
             return zona;
